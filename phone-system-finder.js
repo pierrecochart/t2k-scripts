@@ -463,8 +463,8 @@ function setEnqType(type) {
   document.getElementById('fields-call').style.display  = type === 'call'  ? 'block' : 'none';
   document.getElementById('fields-quote').style.display = type === 'quote' ? 'block' : 'none';
   // Show submit button only once a type is selected
-  const submitBtn = document.getElementById('modal-submit-btn');
-  const privacyNotice = document.getElementById('modal-privacy');
+  const submitBtn = document.getElementById('t2k-modal-submit-btn');
+  const privacyNotice = document.getElementById('t2k-modal-privacy');
   submitBtn.style.display = 'flex';
   privacyNotice.style.display = 'flex';
   submitBtn.innerHTML = (type === 'call'
@@ -477,8 +477,8 @@ function openModal(sysKey, matchPct) {
   const S = SYSTEMS[sysKey];
   const t = window._tracking;
  
-  document.getElementById('modal-sys-name').textContent = S.name;
-  document.getElementById('modal-sys-dot').style.background = S.color;
+  document.getElementById('t2k-modal-sys-name').textContent = S.name;
+  document.getElementById('t2k-modal-sys-dot').style.background = S.color;
   document.getElementById('modal-subject').value = 'Phone system enquiry — ' + S.name + ' (T2K VoIP Phone System Finder)';
   document.getElementById('hidden-system').value = S.name;
   document.getElementById('hidden-score').value  = matchPct + '% match';
@@ -492,10 +492,10 @@ function openModal(sysKey, matchPct) {
   document.getElementById('hidden-answers').value = answerLines;
  
   // Still populate summary div for hidden data — but CSS hides it from user
-  const summary = document.getElementById('modal-summary');
+  const summary = document.getElementById('t2k-modal-summary');
   summary.innerHTML = QUESTIONS.filter(q => answers[q.id]).map(q => {
     const opt = q.options.find(o => o.val === answers[q.id]);
-    return `<span class="ans-chip">${Q_SHORT_LABELS[q.id]}: ${opt ? opt.label : ''}</span>`;
+    return `<span class="t2k-ans-chip">${Q_SHORT_LABELS[q.id]}: ${opt ? opt.label : ''}</span>`;
   }).join('');
  
   // Tracking
@@ -518,8 +518,8 @@ function openModal(sysKey, matchPct) {
   document.getElementById('enq-quote-btn').classList.remove('active');
   document.getElementById('fields-call').style.display  = 'none';
   document.getElementById('fields-quote').style.display = 'none';
-  document.getElementById('modal-submit-btn').style.display = 'none';
-  const pn = document.getElementById('modal-privacy');
+  document.getElementById('t2k-modal-submit-btn').style.display = 'none';
+  const pn = document.getElementById('t2k-modal-privacy');
   if (pn) pn.style.display = 'none';
  
   // Re-apply hidden values after reset
@@ -540,18 +540,18 @@ function openModal(sysKey, matchPct) {
   setV('modal-utm-content',  t.utmContent);
  
   resetModalSubmit();
-  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('t2k-modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('modal-call-name').focus(), 320);
 }
  
 function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
+  document.getElementById('t2k-modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
  
 function handleOverlayClick(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
+  if (e.target === document.getElementById('t2k-modal-overlay')) closeModal();
 }
  
 // ── VALIDATION ────────────────────────────────────────────────────────────────
@@ -562,7 +562,7 @@ function validateModal() {
   if (!currentEnqType) return false;
  
   // Clear all errors first
-  ['mf-call-name','mf-call-phone','mf-quote-name','mf-quote-email','mf-quote-users'].forEach(id => {
+  ['t2k-mf-call-name','t2k-mf-call-phone','t2k-mf-quote-name','t2k-mf-quote-email','t2k-mf-quote-users'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('invalid');
   });
@@ -570,30 +570,30 @@ function validateModal() {
   if (currentEnqType === 'call') {
     const name  = document.getElementById('modal-call-name');
     const phone = document.getElementById('modal-call-phone');
-    if (!name.value.trim())  { document.getElementById('mf-call-name').classList.add('invalid');  valid = false; }
-    if (!phone.value.trim()) { document.getElementById('mf-call-phone').classList.add('invalid'); valid = false; }
+    if (!name.value.trim())  { document.getElementById('t2k-mf-call-name').classList.add('invalid');  valid = false; }
+    if (!phone.value.trim()) { document.getElementById('t2k-mf-call-phone').classList.add('invalid'); valid = false; }
   } else {
     const name  = document.getElementById('modal-quote-name');
     const email = document.getElementById('modal-quote-email');
     const users = document.getElementById('modal-quote-users');
-    if (!name.value.trim())                                        { document.getElementById('mf-quote-name').classList.add('invalid');  valid = false; }
-    if (!email.value.trim() || !email.value.includes('@'))         { document.getElementById('mf-quote-email').classList.add('invalid'); valid = false; }
-    if (!users.value || isNaN(users.value) || parseInt(users.value) < 1) { document.getElementById('mf-quote-users').classList.add('invalid'); valid = false; }
+    if (!name.value.trim())                                        { document.getElementById('t2k-mf-quote-name').classList.add('invalid');  valid = false; }
+    if (!email.value.trim() || !email.value.includes('@'))         { document.getElementById('t2k-mf-quote-email').classList.add('invalid'); valid = false; }
+    if (!users.value || isNaN(users.value) || parseInt(users.value) < 1) { document.getElementById('t2k-mf-quote-users').classList.add('invalid'); valid = false; }
   }
   return valid;
 }
  
 function resetModalSubmit() {
-  const btn = document.getElementById('modal-submit-btn');
+  const btn = document.getElementById('t2k-modal-submit-btn');
   btn.disabled = false;
   if (currentEnqType) setEnqType(currentEnqType);
 }
  
 document.getElementById('enquiry-modal-form').addEventListener('submit', function(e) {
   if (!validateModal()) { e.preventDefault(); return; }
-  const btn = document.getElementById('modal-submit-btn');
+  const btn = document.getElementById('t2k-modal-submit-btn');
   btn.disabled = true;
-  btn.innerHTML = '<div class="spinner"></div> Sending…';
+  btn.innerHTML = '<div class="t2k-spinner"></div> Sending…';
 });
  
 // Blur validation
@@ -601,7 +601,7 @@ document.getElementById('enquiry-modal-form').addEventListener('submit', functio
   const el = document.getElementById(id);
   if (!el) return;
   el.addEventListener('blur', function() {
-    const fieldMap = { 'modal-call-name':'mf-call-name', 'modal-call-phone':'mf-call-phone' };
+    const fieldMap = { 'modal-call-name':'t2k-mf-call-name', 'modal-call-phone':'t2k-mf-call-phone' };
     const field = document.getElementById(fieldMap[id]);
     if (field) field.classList.toggle('invalid', !this.value.trim());
   });
@@ -610,7 +610,7 @@ document.getElementById('enquiry-modal-form').addEventListener('submit', functio
   const el = document.getElementById(id);
   if (!el) return;
   el.addEventListener('blur', function() {
-    const fieldMap = { 'modal-quote-name':'mf-quote-name', 'modal-quote-email':'mf-quote-email' };
+    const fieldMap = { 'modal-quote-name':'t2k-mf-quote-name', 'modal-quote-email':'t2k-mf-quote-email' };
     const field = document.getElementById(fieldMap[id]);
     if (!field) return;
     const tests = { 'modal-quote-name': v => v.trim().length > 0, 'modal-quote-email': v => v.trim().length > 0 && v.includes('@') };
@@ -638,11 +638,11 @@ const VIDEO_QUOTE_URLS = {
 };
  
 function openVideoModal(sysKey, sysName) {
-  const overlay   = document.getElementById('video-modal-overlay');
-  const titleEl   = document.getElementById('video-modal-title-text');
-  const wrap      = document.getElementById('video-embed-wrap');
-  const placeholder = document.getElementById('video-placeholder');
-  const quoteBtn  = document.getElementById('video-modal-quote-btn');
+  const overlay   = document.getElementById('t2k-video-modal-overlay');
+  const titleEl   = document.getElementById('t2k-video-modal-title-text');
+  const wrap      = document.getElementById('t2k-video-embed-wrap');
+  const placeholder = document.getElementById('t2k-video-placeholder');
+  const quoteBtn  = document.getElementById('t2k-video-modal-quote-btn');
  
   titleEl.textContent = sysName + ' — Overview';
   quoteBtn.href = VIDEO_QUOTE_URLS[sysKey] || '/quote/request-a-quote#Quote';
@@ -669,19 +669,19 @@ function openVideoModal(sysKey, sysName) {
 }
  
 function closeVideoModal() {
-  const overlay = document.getElementById('video-modal-overlay');
-  const wrap    = document.getElementById('video-embed-wrap');
+  const overlay = document.getElementById('t2k-video-modal-overlay');
+  const wrap    = document.getElementById('t2k-video-embed-wrap');
   overlay.classList.remove('open');
   document.body.style.overflow = '';
   setTimeout(() => {
     const iframe = wrap.querySelector('iframe');
     if (iframe) iframe.remove();
-    document.getElementById('video-placeholder').style.display = 'flex';
+    document.getElementById('t2k-video-placeholder').style.display = 'flex';
   }, 260);
 }
  
 function handleVideoOverlayClick(e) {
-  if (e.target === document.getElementById('video-modal-overlay')) closeVideoModal();
+  if (e.target === document.getElementById('t2k-video-modal-overlay')) closeVideoModal();
 }
  
 document.addEventListener('keydown', e => {
