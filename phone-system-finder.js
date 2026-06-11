@@ -369,20 +369,8 @@ function t2kValidate(){
   return ok;
 }
  
-document.getElementById('t2k-enq-form').addEventListener('submit',function(e){
-  if(!t2kValidate()){ e.preventDefault(); return; }
-  e.stopImmediatePropagation(); // prevent Webflow form hijack
-  const btn=document.getElementById('t2k-msubmit');
-  btn.disabled=true;
-  btn.innerHTML='<div class="t2k-spinner"></div> Sending…';
-});
- 
 // Blur validation
-[['t2k-quote-users','t2k-fq-users'],['t2k-quote-name','t2k-fq-name'],['t2k-quote-email','t2k-fq-email'],
- ['t2k-call-name','t2k-fc-name'],['t2k-call-phone','t2k-fc-phone']].forEach(([inId,fId])=>{
-  const el=document.getElementById(inId);
-  if(el) el.addEventListener('blur',function(){ document.getElementById(fId).classList.toggle('t2k-invalid',!this.value.trim()); });
-});
+
  
 // ── VIDEO MODAL ──────────────────────────────────────────────────────────────
 function t2kOpenVid(sysKey,sysName){
@@ -413,7 +401,37 @@ function t2kCloseVid(){
 }
 function t2kVidOverlayClick(e){ if(e.target===document.getElementById('t2k-vid-overlay')) t2kCloseVid(); }
  
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ t2kCloseEnq(); t2kCloseVid(); } });
- 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-t2kRender();
+function t2kInit() {
+  t2kRender();
+
+  const form = document.getElementById('t2k-enq-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      if (!t2kValidate()) { e.preventDefault(); return; }
+      e.stopImmediatePropagation();
+      const btn = document.getElementById('t2k-msubmit');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="t2k-spinner"></div> Sending…';
+    });
+  }
+
+  [['t2k-quote-users','t2k-fq-users'],['t2k-quote-name','t2k-fq-name'],
+   ['t2k-quote-email','t2k-fq-email'],['t2k-call-name','t2k-fc-name'],
+   ['t2k-call-phone','t2k-fc-phone']].forEach(([inId,fId]) => {
+    const el = document.getElementById(inId);
+    if (el) el.addEventListener('blur', function() {
+      document.getElementById(fId).classList.toggle('t2k-invalid', !this.value.trim());
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { t2kCloseEnq(); t2kCloseVid(); }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', t2kInit);
+} else {
+  t2kInit();
+}
