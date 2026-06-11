@@ -139,14 +139,17 @@ const T2K_SYS = {
   }
 };
  
-// Video embeds — add YouTube embed URLs when ready
+// T2K_VIDEOS — configure each system's video
+// For Wistia: { type:'wistia', id:'innvsb7xi4' }
+// For YouTube: { type:'youtube', id:'dQw4w9WgXcQ' }  (just the video ID after ?v=)
+// Leave null to hide the watch button for that system
 const T2K_VIDEOS = {
-  mitel:'',  // e.g. 'https://www.youtube.com/embed/VIDEO_ID'
-  '3cx':'',
-  horizon:'',
-  webex:'',
-  phoneline:'',
-  flow:''
+  mitel:     null,
+  '3cx':     null,
+  horizon:   { type:'wistia', id:'innvsb7xi4' },
+  webex:     null,
+  phoneline: null,
+  flow:      null
 };
  
 // ── STATE ────────────────────────────────────────────────────────────────────
@@ -269,7 +272,7 @@ function t2kShowResults(){
         <div class="t2k-rfooter">
           <button class="t2k-btn-enq" type="button" onclick="t2kOpenEnq('${sys}',${pct})">Enquire about ${S.name} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
           <a class="t2k-btn-review" href="${S.url}">Read our ${S.name} review <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-          <button class="t2k-btn-watch" type="button" onclick="t2kOpenVid('${sys}','${S.name}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Watch ${S.name} overview</button>
+          ${T2K_VIDEOS[sys] !== null ? `<button class="t2k-btn-watch" type="button" onclick="t2kOpenVid('${sys}','${S.name}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Watch ${S.name} overview</button>` : ''}
           ${isTop?'<button class="t2k-btn-restart" type="button" onclick="t2kRestart()">Retake quiz</button>':''}
         </div>
       </div>
@@ -373,33 +376,69 @@ function t2kValidate(){
 
  
 // ── VIDEO MODAL ──────────────────────────────────────────────────────────────
-function t2kOpenVid(sysKey,sysName){
-  document.getElementById('t2k-vid-title').textContent=sysName+' — Overview';
-  document.getElementById('t2k-vid-quote').href=T2K_SYS[sysKey].quoteUrl;
-  const wrap=document.getElementById('t2k-vid-embed');
-  const ph=document.getElementById('t2k-vid-ph');
-  const ex=wrap.querySelector('iframe'); if(ex) ex.remove();
-  const url=T2K_VIDEOS[sysKey];
-  if(url){
-    ph.style.display='none';
-    const ifr=document.createElement('iframe');
-    ifr.src=url; ifr.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    ifr.allowFullscreen=true; ifr.title=sysName+' overview';
+function t2kLoadWistia(mediaId, wrap) {
+  if (!document.querySelector('script[src*="wistia.com/player.js"]')) {
+    const s1 = document.createElement('script');
+    s1.src = 'https://fast.wistia.com/player.js';
+    s1.async = true;
+    document.head.appendChild(s1);
+  }
+  if (!document.querySelector('script[src*="wistia.com/embed/' + mediaId + '"]')) {
+    const s2 = document.createElement('script');
+    s2.src = 'https://fast.wistia.com/embed/' + mediaId + '.js';
+    s2.async = true;
+    s2.type = 'module';
+    document.head.appendChild(s2);
+  }
+  const player = document.createElement('wistia-player');
+  player.setAttribute('media-id', mediaId);
+  player.style.width = '100%';
+  player.style.height = '100%';
+  player.style.position = 'absolute';
+  player.style.top = '0';
+  player.style.left = '0';
+  wrap.appendChild(player);
+}
+
+function t2kOpenVid(sysKey, sysName) {
+  document.getElementById('t2k-vid-title').textContent = sysName + ' — Overview';
+  document.getElementById('t2k-vid-quote').href = T2K_SYS[sysKey].quoteUrl;
+  const wrap = document.getElementById('t2k-vid-embed');
+  const ph   = document.getElementById('t2k-vid-ph');
+
+  wrap.querySelectorAll('iframe, wistia-player').forEach(el => el.remove());
+
+  const vid = T2K_VIDEOS[sysKey];
+  if (vid && vid.type === 'wistia') {
+    ph.style.display = 'none';
+    t2kLoadWistia(vid.id, wrap);
+  } else if (vid && vid.type === 'youtube') {
+    ph.style.display = 'none';
+    const ifr = document.createElement('iframe');
+    ifr.src = 'https://www.youtube.com/embed/' + vid.id + '?autoplay=1&rel=0';
+    ifr.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    ifr.allowFullscreen = true;
+    ifr.title = sysName + ' overview';
     wrap.appendChild(ifr);
-  } else { ph.style.display='flex'; }
+  } else {
+    ph.style.display = 'flex';
+  }
+
   document.getElementById('t2k-vid-overlay').classList.add('t2k-open');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
-function t2kCloseVid(){
+
+function t2kCloseVid() {
   document.getElementById('t2k-vid-overlay').classList.remove('t2k-open');
-  document.body.style.overflow='';
-  setTimeout(()=>{
-    const w=document.getElementById('t2k-vid-embed');
-    const ifr=w.querySelector('iframe'); if(ifr) ifr.remove();
-    document.getElementById('t2k-vid-ph').style.display='flex';
-  },260);
+  document.body.style.overflow = '';
+  setTimeout(() => {
+    const wrap = document.getElementById('t2k-vid-embed');
+    wrap.querySelectorAll('iframe, wistia-player').forEach(el => el.remove());
+    document.getElementById('t2k-vid-ph').style.display = 'flex';
+  }, 260);
 }
-function t2kVidOverlayClick(e){ if(e.target===document.getElementById('t2k-vid-overlay')) t2kCloseVid(); }
+
+function t2kVidOverlayClick(e) { if (e.target === document.getElementById('t2k-vid-overlay')) t2kCloseVid(); }
  
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function t2kInit() {
