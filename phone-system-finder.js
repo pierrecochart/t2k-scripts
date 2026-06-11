@@ -74,7 +74,7 @@ const T2K_SYS = {
   mitel:{
     name:'Mitel MiVoice Business',tagline:'Enterprise-grade unified communications with genuine deployment choice',
     color:'#dc2626',
-    url:'/telephone-system-reviews/mitel-mivoice-business/',
+    url:'/telephone-system-reviews/mitel-mivoice-business',
     quoteUrl:'/quote/request-a-quote?plan=mitel-no-package#Quote',
     why(a){let w='<strong>Mitel MiVoice Business</strong> is built for organisations that need proven, enterprise-grade telephony with total control over where and how it\'s deployed. ';if(a.deployment==='onprem')w+='Your preference for on-premises deployment is exactly Mitel\'s sweet spot — it supports on-prem, private cloud, and public cloud on a single codebase. ';if(a.users==='enterprise'||a.users==='large')w+='At your scale, Mitel\'s support for 5 to 65,000 users on one platform eliminates the need to re-platform as you grow. ';if(a.priority==='security')w+='With full data sovereignty and on-site hardware options, it meets the strictest compliance and security requirements. ';return w;},
     pros:['Genuine on-premises deployment','Scales 5–65,000 users','Full data sovereignty','Integrated contact centre','CapEx or OpEx pricing'],
@@ -85,7 +85,7 @@ const T2K_SYS = {
   '3cx':{
     name:'3CX',tagline:'Open-platform PBX priced by concurrent calls, not headcount',
     color:'#2563eb',
-    url:'/telephone-system-reviews/3cx/',
+    url:'/telephone-system-reviews/3cx',
     quoteUrl:'/quote/request-a-quote?plan=3cx-no-package#Quote',
     why(a){let w='<strong>3CX</strong> stands out for its pricing model — you pay per concurrent call rather than per user, which typically delivers significant savings as your team grows. ';if(a.deployment==='onprem')w+='As one of the few modern systems available on-premises (Windows or Linux) as well as cloud-hosted, it gives you genuine deployment choice. ';if(a.priority==='cost')w+='The concurrent-call pricing model often works out considerably cheaper than per-user alternatives for businesses where many staff share a smaller number of active lines. ';if(a.integration==='teams')w+='Teams integration is supported natively, allowing calls within Microsoft Teams without additional phone licensing. ';return w;},
     pros:['Priced per concurrent call — cheaper at scale','On-premises or cloud','Built-in video conferencing','Teams integration','Open-platform SIP compatibility'],
@@ -96,7 +96,7 @@ const T2K_SYS = {
   horizon:{
     name:'Gamma Horizon',tagline:'Award-winning hosted cloud PBX — fully managed, no hardware',
     color:'#7c3aed',
-    url:'/telephone-system-reviews/gamma-horizon/',
+    url:'/telephone-system-reviews/gamma-horizon',
     quoteUrl:'/quote/request-a-quote?plan=horizon-no-package#Quote',
     why(a){let w='<strong>Gamma Horizon</strong> is the UK\'s most widely adopted hosted phone system — a complete, fully managed cloud PBX that requires no on-site hardware and minimal IT resource to run. ';if(a.priority==='simple')w+='Its web-based admin portal makes adding users, changing call routing, and managing the system straightforward without any technical background. ';if(a.remoteWork==='hybrid'||a.remoteWork==='remote')w+='Mobile apps and softphones mean staff can take calls from anywhere with the same experience as being in the office. ';return w;},
     pros:['No on-site hardware needed','Easy web-based admin portal','Strong mobile app','99.999% uptime SLA','UK-hosted data centres'],
@@ -107,7 +107,7 @@ const T2K_SYS = {
   webex:{
     name:'Gamma Webex',tagline:'Horizon telephony meets Cisco Webex — AI meetings, transcription and UC in one platform',
     color:'#0891b2',
-    url:'/telephone-system-reviews/gamma-webex/',
+    url:'/telephone-system-reviews/gamma-webex',
     quoteUrl:'/quote/request-a-quote?plan=webex-no-package#Quote',
     why(a){let w='<strong>Gamma Webex</strong> combines Gamma\'s reliable Horizon hosted telephony network with Cisco\'s enterprise Webex platform — carrier-grade voice quality alongside AI-powered meetings, transcription, and messaging in a single licence. ';if(a.remoteWork==='hybrid'||a.remoteWork==='remote')w+='The combination of a mobile-first platform and Webex\'s desktop experience makes it particularly strong for hybrid and remote-first teams. ';if(a.callHandling==='advanced'||a.callHandling==='contactcentre')w+='AI-powered call routing, real-time transcription, and predictive insights are included natively — not as expensive add-ons. ';return w;},
     pros:['Cisco Webex AI features built in','Carrier-grade 99.999% uptime','Single licence for voice and UC','Enterprise-grade security','Strong mobile and desktop apps'],
@@ -118,7 +118,7 @@ const T2K_SYS = {
   phoneline:{
     name:'Gamma Phoneline+',tagline:'The simplest PSTN replacement — ready the same day, no hardware',
     color:'#059669',
-    url:'/telephone-system-reviews/gamma-phoneline-plus/',
+    url:'/telephone-system-reviews/gamma-phoneline-plus',
     quoteUrl:'/quote/request-a-quote?plan=phoneline-plus-no-package#Quote',
     why(a){let w='<strong>Gamma Phoneline+</strong> is the most straightforward way for small businesses and sole traders to move away from a traditional landline before the PSTN switch-off deadline. ';if(a.users==='micro')w+='At your size, a full hosted PBX would be more system than you need and cost more than necessary — Phoneline+ gives you everything a small business actually uses at a fraction of the price. ';if(a.priority==='simple')w+="There's no admin portal to learn, no hardware to configure, and no IT resource required — the setup takes minutes and it just works. ";return w;},
     pros:['Simplest possible setup','Lowest cost option','Keeps your existing number','Mobile app included','Unlimited UK calls','Ideal PSTN replacement'],
@@ -129,7 +129,7 @@ const T2K_SYS = {
   flow:{
     name:'Voiceflex Flow',tagline:'UCaaS-first platform with native Microsoft Teams PBX — no Teams Phone licence required',
     color:'#d97706',
-    url:'/telephone-system-reviews/voiceflex-flow/',
+    url:'/telephone-system-reviews/voiceflex-flow',
     quoteUrl:'/quote/request-a-quote?plan=voiceflex-flow-no-package#Quote',
     why(a){let w='<strong>Voiceflex Flow</strong> is built from the ground up as a UCaaS platform — unlike most competitors that add collaboration onto a voice system, Flow starts with unified communications and adds full PBX telephony on top. ';if(a.integration==='teams'||a.integration==='both')w+='Its standout feature is a native Microsoft Teams integration via an embedded app that gives you complete PBX call handling inside Teams — without needing a Microsoft Teams Phone licence. ';if(a.remoteWork==='remote')w+='Regardless of whether staff call from mobile, PSTN, the internet, or Teams, the experience and feature set is identical — making it the strongest option for fully distributed teams. ';return w;},
     pros:['Native Teams integration — no Phone licence','True UCaaS — not voice-first','Self-service admin portal','Contact centre built in','Same experience across all devices'],
