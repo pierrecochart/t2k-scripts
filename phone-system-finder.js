@@ -145,7 +145,7 @@ const T2K_SYS = {
 // Leave null to hide the watch button for that system
 const T2K_VIDEOS = {
   mitel:     null,
-  '3cx':     null,
+  3cx:     { type:'youtube', id:'8TfD-B3fKXw' },
   horizon:   { type:'wistia', id:'innvsb7xi4' },
   webex:     null,
   phoneline: null,
