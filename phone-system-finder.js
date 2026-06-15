@@ -36,7 +36,7 @@ const T2K_QS = [
     {l:'Prefer CapEx — buy outright rather than subscribe',h:"You'd rather own the system than pay monthly fees",v:'capex'},
     {l:'Enterprise budget — best solution matters most',h:'Spend is less of a concern than capability and reliability',v:'enterprise'}]}
 ];
- 
+
 // ── SCORING RULES ────────────────────────────────────────────────────────────
 const T2K_RULES = [
   {q:'users',v:'micro',s:{phoneline:4,horizon:2,flow:1}},
@@ -68,13 +68,13 @@ const T2K_RULES = [
   {q:'budget',v:'capex',s:{mitel:5,'3cx':4}},
   {q:'budget',v:'enterprise',s:{mitel:4,webex:4,flow:3,'3cx':3}}
 ];
- 
+
 // ── SYSTEM DEFINITIONS ───────────────────────────────────────────────────────
 const T2K_SYS = {
   mitel:{
     name:'Mitel MiVoice Business',tagline:'Enterprise-grade unified communications with genuine deployment choice',
     color:'#dc2626',
-    url:'/telephone-system-reviews/mitel-mivoice-business',
+    url:'/telephone-system-reviews/mitel-mivoice-business/',
     quoteUrl:'/quote/request-a-quote?plan=mitel-no-package#Quote',
     why(a){let w='<strong>Mitel MiVoice Business</strong> is built for organisations that need proven, enterprise-grade telephony with total control over where and how it\'s deployed. ';if(a.deployment==='onprem')w+='Your preference for on-premises deployment is exactly Mitel\'s sweet spot — it supports on-prem, private cloud, and public cloud on a single codebase. ';if(a.users==='enterprise'||a.users==='large')w+='At your scale, Mitel\'s support for 5 to 65,000 users on one platform eliminates the need to re-platform as you grow. ';if(a.priority==='security')w+='With full data sovereignty and on-site hardware options, it meets the strictest compliance and security requirements. ';return w;},
     pros:['Genuine on-premises deployment','Scales 5–65,000 users','Full data sovereignty','Integrated contact centre','CapEx or OpEx pricing'],
@@ -85,7 +85,7 @@ const T2K_SYS = {
   '3cx':{
     name:'3CX',tagline:'Open-platform PBX priced by concurrent calls, not headcount',
     color:'#2563eb',
-    url:'/telephone-system-reviews/3cx',
+    url:'/telephone-system-reviews/3cx/',
     quoteUrl:'/quote/request-a-quote?plan=3cx-no-package#Quote',
     why(a){let w='<strong>3CX</strong> stands out for its pricing model — you pay per concurrent call rather than per user, which typically delivers significant savings as your team grows. ';if(a.deployment==='onprem')w+='As one of the few modern systems available on-premises (Windows or Linux) as well as cloud-hosted, it gives you genuine deployment choice. ';if(a.priority==='cost')w+='The concurrent-call pricing model often works out considerably cheaper than per-user alternatives for businesses where many staff share a smaller number of active lines. ';if(a.integration==='teams')w+='Teams integration is supported natively, allowing calls within Microsoft Teams without additional phone licensing. ';return w;},
     pros:['Priced per concurrent call — cheaper at scale','On-premises or cloud','Built-in video conferencing','Teams integration','Open-platform SIP compatibility'],
@@ -96,7 +96,7 @@ const T2K_SYS = {
   horizon:{
     name:'Gamma Horizon',tagline:'Award-winning hosted cloud PBX — fully managed, no hardware',
     color:'#7c3aed',
-    url:'/telephone-system-reviews/gamma-horizon',
+    url:'/telephone-system-reviews/gamma-horizon/',
     quoteUrl:'/quote/request-a-quote?plan=horizon-no-package#Quote',
     why(a){let w='<strong>Gamma Horizon</strong> is the UK\'s most widely adopted hosted phone system — a complete, fully managed cloud PBX that requires no on-site hardware and minimal IT resource to run. ';if(a.priority==='simple')w+='Its web-based admin portal makes adding users, changing call routing, and managing the system straightforward without any technical background. ';if(a.remoteWork==='hybrid'||a.remoteWork==='remote')w+='Mobile apps and softphones mean staff can take calls from anywhere with the same experience as being in the office. ';return w;},
     pros:['No on-site hardware needed','Easy web-based admin portal','Strong mobile app','99.999% uptime SLA','UK-hosted data centres'],
@@ -107,7 +107,7 @@ const T2K_SYS = {
   webex:{
     name:'Gamma Webex',tagline:'Horizon telephony meets Cisco Webex — AI meetings, transcription and UC in one platform',
     color:'#0891b2',
-    url:'/telephone-system-reviews/gamma-webex',
+    url:'/telephone-system-reviews/gamma-webex/',
     quoteUrl:'/quote/request-a-quote?plan=webex-no-package#Quote',
     why(a){let w='<strong>Gamma Webex</strong> combines Gamma\'s reliable Horizon hosted telephony network with Cisco\'s enterprise Webex platform — carrier-grade voice quality alongside AI-powered meetings, transcription, and messaging in a single licence. ';if(a.remoteWork==='hybrid'||a.remoteWork==='remote')w+='The combination of a mobile-first platform and Webex\'s desktop experience makes it particularly strong for hybrid and remote-first teams. ';if(a.callHandling==='advanced'||a.callHandling==='contactcentre')w+='AI-powered call routing, real-time transcription, and predictive insights are included natively — not as expensive add-ons. ';return w;},
     pros:['Cisco Webex AI features built in','Carrier-grade 99.999% uptime','Single licence for voice and UC','Enterprise-grade security','Strong mobile and desktop apps'],
@@ -118,7 +118,7 @@ const T2K_SYS = {
   phoneline:{
     name:'Gamma Phoneline+',tagline:'The simplest PSTN replacement — ready the same day, no hardware',
     color:'#059669',
-    url:'/telephone-system-reviews/gamma-phoneline-plus',
+    url:'/telephone-system-reviews/gamma-phoneline-plus/',
     quoteUrl:'/quote/request-a-quote?plan=phoneline-plus-no-package#Quote',
     why(a){let w='<strong>Gamma Phoneline+</strong> is the most straightforward way for small businesses and sole traders to move away from a traditional landline before the PSTN switch-off deadline. ';if(a.users==='micro')w+='At your size, a full hosted PBX would be more system than you need and cost more than necessary — Phoneline+ gives you everything a small business actually uses at a fraction of the price. ';if(a.priority==='simple')w+="There's no admin portal to learn, no hardware to configure, and no IT resource required — the setup takes minutes and it just works. ";return w;},
     pros:['Simplest possible setup','Lowest cost option','Keeps your existing number','Mobile app included','Unlimited UK calls','Ideal PSTN replacement'],
@@ -129,7 +129,7 @@ const T2K_SYS = {
   flow:{
     name:'Voiceflex Flow',tagline:'UCaaS-first platform with native Microsoft Teams PBX — no Teams Phone licence required',
     color:'#d97706',
-    url:'/telephone-system-reviews/voiceflex-flow',
+    url:'/telephone-system-reviews/voiceflex-flow/',
     quoteUrl:'/quote/request-a-quote?plan=voiceflex-flow-no-package#Quote',
     why(a){let w='<strong>Voiceflex Flow</strong> is built from the ground up as a UCaaS platform — unlike most competitors that add collaboration onto a voice system, Flow starts with unified communications and adds full PBX telephony on top. ';if(a.integration==='teams'||a.integration==='both')w+='Its standout feature is a native Microsoft Teams integration via an embedded app that gives you complete PBX call handling inside Teams — without needing a Microsoft Teams Phone licence. ';if(a.remoteWork==='remote')w+='Regardless of whether staff call from mobile, PSTN, the internet, or Teams, the experience and feature set is identical — making it the strongest option for fully distributed teams. ';return w;},
     pros:['Native Teams integration — no Phone licence','True UCaaS — not voice-first','Self-service admin portal','Contact centre built in','Same experience across all devices'],
@@ -138,27 +138,28 @@ const T2K_SYS = {
     hl:['Teams integration','No Teams Phone licence']
   }
 };
- 
+
+// Video embeds — add YouTube embed URLs when ready
 // T2K_VIDEOS — configure each system's video
 // For Wistia: { type:'wistia', id:'innvsb7xi4' }
 // For YouTube: { type:'youtube', id:'dQw4w9WgXcQ' }  (just the video ID after ?v=)
 // Leave null to hide the watch button for that system
 const T2K_VIDEOS = {
   mitel:     null,
-  '3cx':     { type:'youtube', id:'8TfD-B3fKXw' },
-  horizon:   { type:'wistia',  id:'innvsb7xi4'  },
-  webex:     { type:'wistia',  id:'lb9ykdf4hj'  },
-  phoneline: { type:'wistia',  id:'5qy1vfqfy7'  },
+  '3cx':     null,
+  horizon:   { type:'wistia',  id:'innvsb7xi4' },
+  webex:     null,
+  phoneline: null,
   flow:      null
 };
- 
+
 // ── STATE ────────────────────────────────────────────────────────────────────
 let t2kCur = 0;
 let t2kAns = {};
 let t2kEnqType = null;
- 
+
 const T2K_LABELS = {users:'Team size',priority:'Priority',deployment:'Hosting',remoteWork:'Working style',callHandling:'Call handling',integration:'Integrations',budget:'Budget'};
- 
+
 // ── TRACKING ─────────────────────────────────────────────────────────────────
 const t2kTrack = (()=>{
   const p = new URLSearchParams(window.location.search);
@@ -178,14 +179,14 @@ const t2kTrack = (()=>{
     utmContent:get('utm_content')||getCk('utm_content')
   };
 })();
- 
+
 // ── SCORE ────────────────────────────────────────────────────────────────────
 function t2kScores(){
   const s={mitel:0,'3cx':0,horizon:0,webex:0,phoneline:0,flow:0};
   T2K_RULES.forEach(r=>{ if(t2kAns[r.q]===r.v) Object.entries(r.s).forEach(([k,v])=>s[k]+=v); });
   return s;
 }
- 
+
 // ── RENDER QUESTION ──────────────────────────────────────────────────────────
 function t2kRender(){
   const q = T2K_QS[t2kCur];
@@ -210,7 +211,7 @@ function t2kRender(){
     : 'Next question <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
   t2kRenderSidebar();
 }
- 
+
 function t2kSel(qId,val,el){
   document.querySelectorAll('.t2k-opt').forEach(b=>b.classList.remove('t2k-sel'));
   el.classList.add('t2k-sel');
@@ -218,7 +219,7 @@ function t2kSel(qId,val,el){
   document.getElementById('t2k-next').disabled=false;
   t2kRenderSidebar();
 }
- 
+
 function t2kRenderSidebar(){
   document.getElementById('t2k-ans-panel').innerHTML = T2K_QS.map(q=>{
     const a=t2kAns[q.id]; const opt=q.opts.find(o=>o.v===a);
@@ -235,13 +236,13 @@ function t2kRenderSidebar(){
       <div class="t2k-score-num" style="color:${sysColors[k]}">${v}</div>
     </div>`).join('');
 }
- 
+
 function t2kNext(){
   if(t2kCur<T2K_QS.length-1){ t2kCur++; t2kRender(); }
   else t2kShowResults();
 }
 function t2kPrev(){ if(t2kCur>0){ t2kCur--; t2kRender(); } }
- 
+
 // ── RESULTS ──────────────────────────────────────────────────────────────────
 function t2kShowResults(){
   document.getElementById('t2k-quiz').style.display='none';
@@ -271,15 +272,13 @@ function t2kShowResults(){
         </div>
         <div class="t2k-rfooter">
           <button class="t2k-btn-enq" type="button" onclick="t2kOpenEnq('${sys}',${pct})">Enquire about ${S.name} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-          <a class="t2k-btn-review" href="${S.url}">Read our ${S.name} review <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           ${T2K_VIDEOS[sys] !== null ? `<button class="t2k-btn-watch" type="button" onclick="t2kOpenVid('${sys}','${S.name}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Watch ${S.name} overview</button>` : ''}
-          ${isTop?'<button class="t2k-btn-restart" type="button" onclick="t2kRestart()">Retake quiz</button>':''}
         </div>
       </div>
     </div>`;
   }).join('');
 }
- 
+
 function t2kRestart(){
   t2kCur=0; t2kAns={};
   document.getElementById('t2k-results').style.display='none';
@@ -287,7 +286,7 @@ function t2kRestart(){
   t2kRender();
   window.scrollTo({top:0,behavior:'smooth'});
 }
- 
+
 // ── ENQUIRY MODAL ────────────────────────────────────────────────────────────
 function t2kOpenEnq(sysKey,matchPct){
   const S=T2K_SYS[sysKey];
@@ -326,7 +325,7 @@ function t2kOpenEnq(sysKey,matchPct){
   document.body.style.overflow='hidden';
   setTimeout(()=>document.getElementById('t2k-equote-btn').focus(),320);
 }
- 
+
 function t2kSetType(type){
   t2kEnqType=type;
   document.getElementById('t2k-htype').value=type==='call'?'Callback request':'Quote request';
@@ -342,13 +341,13 @@ function t2kSetType(type){
     ?'Request a callback <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 5.5 5.5l.86-.86a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'
     :'Send quote request <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
 }
- 
+
 function t2kCloseEnq(){
   document.getElementById('t2k-overlay').classList.remove('t2k-open');
   document.body.style.overflow='';
 }
 function t2kOverlayClick(e){ if(e.target===document.getElementById('t2k-overlay')) t2kCloseEnq(); }
- 
+
 // Validation
 function t2kValidate(){
   if(!t2kEnqType) return false;
@@ -371,25 +370,40 @@ function t2kValidate(){
   }
   return ok;
 }
- 
-// Blur validation
 
- 
+document.getElementById('t2k-enq-form').addEventListener('submit',function(e){
+  if(!t2kValidate()){ e.preventDefault(); return; }
+  e.stopImmediatePropagation(); // prevent Webflow form hijack
+  const btn=document.getElementById('t2k-msubmit');
+  btn.disabled=true;
+  btn.innerHTML='<div class="t2k-spinner"></div> Sending…';
+});
+
+// Blur validation
+[['t2k-quote-users','t2k-fq-users'],['t2k-quote-name','t2k-fq-name'],['t2k-quote-email','t2k-fq-email'],
+ ['t2k-call-name','t2k-fc-name'],['t2k-call-phone','t2k-fc-phone']].forEach(([inId,fId])=>{
+  const el=document.getElementById(inId);
+  if(el) el.addEventListener('blur',function(){ document.getElementById(fId).classList.toggle('t2k-invalid',!this.value.trim()); });
+});
+
 // ── VIDEO MODAL ──────────────────────────────────────────────────────────────
 function t2kLoadWistia(mediaId, wrap) {
+  // Inject Wistia scripts if not already present
   if (!document.querySelector('script[src*="wistia.com/player.js"]')) {
     const s1 = document.createElement('script');
     s1.src = 'https://fast.wistia.com/player.js';
     s1.async = true;
     document.head.appendChild(s1);
   }
-  if (!document.querySelector('script[src*="wistia.com/embed/' + mediaId + '"]')) {
+  const embedScript = document.querySelector('script[src*="wistia.com/embed/' + mediaId + '"]');
+  if (!embedScript) {
     const s2 = document.createElement('script');
     s2.src = 'https://fast.wistia.com/embed/' + mediaId + '.js';
     s2.async = true;
     s2.type = 'module';
     document.head.appendChild(s2);
   }
+  // Add the wistia-player custom element
   const player = document.createElement('wistia-player');
   player.setAttribute('media-id', mediaId);
   player.style.width = '100%';
@@ -400,12 +414,25 @@ function t2kLoadWistia(mediaId, wrap) {
   wrap.appendChild(player);
 }
 
+// Track which system the video modal is showing
+let t2kVidCurrentSys = null;
+
+function t2kVidToEnq() {
+  t2kCloseVid();
+  // Small delay to let video modal close before enquiry modal opens
+  setTimeout(() => {
+    if (t2kVidCurrentSys) t2kOpenEnq(t2kVidCurrentSys, 0);
+  }, 280);
+}
+
 function t2kOpenVid(sysKey, sysName) {
+  t2kVidCurrentSys = sysKey;
   document.getElementById('t2k-vid-title').textContent = sysName + ' — Overview';
   document.getElementById('t2k-vid-quote').href = T2K_SYS[sysKey].quoteUrl;
   const wrap = document.getElementById('t2k-vid-embed');
   const ph   = document.getElementById('t2k-vid-ph');
 
+  // Clear any previous embed
   wrap.querySelectorAll('iframe, wistia-player').forEach(el => el.remove());
 
   const vid = T2K_VIDEOS[sysKey];
@@ -439,7 +466,9 @@ function t2kCloseVid() {
 }
 
 function t2kVidOverlayClick(e) { if (e.target === document.getElementById('t2k-vid-overlay')) t2kCloseVid(); }
- 
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ t2kCloseEnq(); t2kCloseVid(); } });
+
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function t2kInit() {
   t2kRender();
