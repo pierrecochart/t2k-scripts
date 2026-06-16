@@ -247,7 +247,9 @@ function t2kPrev(){ if(t2kCur>0){ t2kCur--; t2kRender(); } }
 function t2kShowResults(){
   document.getElementById('t2k-quiz').style.display='none';
   document.getElementById('t2k-results').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
+ window.scrollTo({top:0,behavior:'smooth'});
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'quiz_completed' });
   const sc=t2kScores();
   const sorted=Object.entries(sc).sort((a,b)=>b[1]-a[1]);
   const topSc=sorted[0][1];
@@ -445,12 +447,14 @@ function t2kInit() {
   const form = document.getElementById('t2k-enq-form');
   if (form) {
     form.addEventListener('submit', function(e) {
-      if (!t2kValidate()) { e.preventDefault(); return; }
-      e.stopImmediatePropagation();
-      const btn = document.getElementById('t2k-msubmit');
-      btn.disabled = true;
-      btn.innerHTML = '<div class="t2k-spinner"></div> Sending…';
-    });
+  if (!t2kValidate()) { e.preventDefault(); return; }
+  e.stopImmediatePropagation();
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'quiz_enquiry_submitted' });
+  const btn = document.getElementById('t2k-msubmit');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="t2k-spinner"></div> Sending…';
+});
   }
 
   [['t2k-quote-users','t2k-fq-users'],['t2k-quote-name','t2k-fq-name'],
