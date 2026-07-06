@@ -218,6 +218,12 @@ function t2kSel(qId,val,el){
   t2kAns[qId]=val;
   document.getElementById('t2k-next').disabled=false;
   t2kRenderSidebar();
+
+  // Fire quiz_started only on first answer
+  if (Object.keys(t2kAns).length === 1) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'quiz_started' });
+  }
 }
 
 function t2kRenderSidebar(){
