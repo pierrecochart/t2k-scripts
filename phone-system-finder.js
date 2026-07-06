@@ -10,7 +10,6 @@ const T2K_QS = [
     {l:'Simplicity — just works, no IT fuss',h:"You want a system that's easy to manage without technical help",v:'simple'},
     {l:'Features & call handling',h:'Call queues, IVR, reporting, CRM integration matter to you',v:'features'},
     {l:'Low cost',h:'Keeping monthly spend as low as possible is the priority',v:'cost'},
-    {l:'Microsoft Teams integration',h:'Teams is your main collaboration tool and you want calls inside it',v:'teams'},
     {l:'Control & data security',h:'You need on-premise hosting, data sovereignty, or strict compliance',v:'security'}]},
   { id:'deployment', title:'Where would you prefer the phone system to be hosted?', opts:[
     {l:'Cloud — fully managed, no hardware',h:'You want a provider to manage everything, no on-site equipment',v:'cloud'},
@@ -27,9 +26,8 @@ const T2K_QS = [
     {l:'Contact centre — omnichannel, CRM integration, wallboards',h:'Full contact centre capability across voice, chat and email',v:'contactcentre'}]},
   { id:'integration', title:'Which business tools do you need your phone system to connect with?', opts:[
     {l:'None — standalone phone system is fine',h:"You don't need the phone system to connect to other software",v:'none'},
-    {l:'Microsoft Teams',h:'You want calls to work inside Microsoft Teams',v:'teams'},
     {l:'CRM (Salesforce, HubSpot, Dynamics etc)',h:'Screen popping, click-to-dial, or call logging in your CRM',v:'crm'},
-    {l:'Both Teams and CRM',h:'Full integration across your Microsoft and CRM stack',v:'both'}]},
+    {l:'Microsoft 365 / Teams and CRM',h:'Full integration across your Microsoft and CRM stack',v:'both'}]},
   { id:'budget', title:"What best describes your approach to budget?", opts:[
     {l:'Lowest possible monthly cost',h:'Keeping recurring spend to a minimum is most important',v:'lowest'},
     {l:'Good value for the features on offer',h:'Willing to pay more for a system that does more',v:'value'},
