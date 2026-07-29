@@ -1,4 +1,9 @@
-
+// ══════════════════════════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════════════════════════
+// Set to false to disable the silent background lead-capture that fires the
+// moment someone reaches the results screen (they've already given name +
+// email by then). Even if they never click "Enquire", you still get the lead.
 const T2K_AUTO_CAPTURE_LEAD = true;
 const T2K_WEB3FORMS_KEY = 'a2e6818c-17e4-4096-b8b3-faec70fce22e';
 
@@ -15,7 +20,79 @@ const T2K_PRIORITY = {
   flow:      0.45
 };
 
+// ══════════════════════════════════════════════════════════════════════════
+// ATTRIBUTION TRACKING — captured once on page load, attached to every
+// outbound submission (auto-capture, "top pick" flag, callback request) so
+// nothing gets lost when the person doesn't come straight from an ad click.
+// gclid + UTM params persist for 30 days via cookie so they survive if
+// someone browses the site before reaching the quiz. Landing page is a
+// session cookie (no expiry) — first page of this visit, distinct from
+// "previous page" which is wherever they were immediately before this page.
+// ══════════════════════════════════════════════════════════════════════════
+const t2kTrack = (()=>{
+  const p = new URLSearchParams(window.location.search);
+  const get = k => p.get(k)||'';
+  const setCk = (k,v,days) => {
+    if(!v) return;
+    let str = k+'='+encodeURIComponent(v)+';path=/';
+    if(days) str += ';max-age='+(days*86400);
+    document.cookie = str;
+  };
+  const getCk = k => { const m=document.cookie.match('(^|;)\\s*'+k+'\\s*=\\s*([^;]+)'); return m?decodeURIComponent(m[2]):''; };
 
+  const gclid = get('gclid')||getCk('gclid');
+  if(get('gclid')) setCk('gclid',get('gclid'),30);
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{ if(get(k)) setCk(k,get(k),30); });
+
+  // Landing page: first page of this browser session. Session cookie (no
+  // max-age) so it resets naturally when the browser closes, rather than
+  // persisting for 30 days like the ad-attribution fields above.
+  let landingPage = getCk('t2k_landing');
+  if(!landingPage){
+    landingPage = window.location.href;
+    setCk('t2k_landing', landingPage, 0);
+  }
+
+  const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+
+  return {
+    gclid,
+    medium: get('utm_medium')||getCk('utm_medium')||(document.referrer?'referral':'direct'),
+    referrer: document.referrer,        // previous page (could be external or internal)
+    sourceUrl: window.location.href,    // current page
+    landingPage,                        // first page of this session
+    device,
+    utmSource:  get('utm_source')||getCk('utm_source'),
+    utmMedium:  get('utm_medium')||getCk('utm_medium'),
+    utmCampaign:get('utm_campaign')||getCk('utm_campaign'),
+    utmTerm:    get('utm_term')||getCk('utm_term'),
+    utmContent: get('utm_content')||getCk('utm_content')
+  };
+})();
+
+// Appends the standard attribution fields to any outbound FormData submission
+function t2kAppendTracking(fd){
+  fd.append('gclid', t2kTrack.gclid);
+  fd.append('medium', t2kTrack.medium);
+  fd.append('device', t2kTrack.device);
+  fd.append('previous_page', t2kTrack.referrer);
+  fd.append('landing_page', t2kTrack.landingPage);
+  fd.append('source_url', t2kTrack.sourceUrl);
+  fd.append('utm_source', t2kTrack.utmSource);
+  fd.append('utm_medium', t2kTrack.utmMedium);
+  fd.append('utm_campaign', t2kTrack.utmCampaign);
+  fd.append('utm_term', t2kTrack.utmTerm);
+  fd.append('utm_content', t2kTrack.utmContent);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// QUESTIONS
+// section:'quiz'  → the original 7 diagnostic questions. These are the only
+//                   ones counted in the "Question X of Y" / progress bar.
+// section:'lead'  → the progressive personal-detail questions. Deliberately
+//                   excluded from the quiz counter (see t2kRender) since
+//                   they aren't part of the matching quiz itself.
+// ══════════════════════════════════════════════════════════════════════════
 const T2K_QS = [
   { id:'users', section:'quiz', type:'number', title:'How many people need to use the phone system?', placeholder:'e.g. 12', hint:'A rough estimate is fine.' },
   { id:'priority', section:'quiz', type:'choice', title:'What matters most to your business from a phone system?', opts:[
@@ -447,6 +524,7 @@ function t2kAutoCaptureLead(sorted, derived){
     fd.append('top_match', topSys);
     fd.append('wants_callback', t2kAns.wantCallback||'');
     fd.append('quiz_answers', ansStr);
+    t2kAppendTracking(fd);
     fetch('https://api.web3forms.com/submit',{method:'POST',body:fd}).catch(()=>{});
   }catch(e){}
 }
@@ -494,6 +572,7 @@ function t2kFlagPreferred(sysKey, sysName, btn){
     fd.append('email', t2kAns.leadEmail||'');
     fd.append('company', t2kAns.leadCompany||'');
     fd.append('preferred_system', sysName);
+    t2kAppendTracking(fd);
     fetch('https://api.web3forms.com/submit',{method:'POST',body:fd}).catch(()=>{});
   }catch(e){}
 }
@@ -584,6 +663,7 @@ function t2kHandleSubmit(e){
     fd.append('company', document.getElementById('t2k-call-co').value);
     fd.append('phone', document.getElementById('t2k-call-phone').value);
     fd.append('email', t2kAns.leadEmail||'');
+    t2kAppendTracking(fd);
     fetch('https://api.web3forms.com/submit',{method:'POST',body:fd}).catch(()=>{});
   }catch(err){}
 
