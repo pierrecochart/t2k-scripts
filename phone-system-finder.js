@@ -186,7 +186,7 @@ const T2K_SYS = {
   },
   '3cx':{
     name:'3CX',tagline:'Open-platform PBX priced by concurrent calls, not headcount',color:'#2563eb',
-    why(a){let w='<strong>3CX</strong> stands out for its pricing model — you pay per concurrent call rather than per user, which typically delivers significant savings as your team grows. ';if(a.deployment==='onprem')w+='As one of the few modern systems available on-premises (Windows or Linux) as well as cloud-hosted, it gives you genuine deployment choice. ';if(a.priority==='cost')w+='The concurrent-call pricing model often works out considerably cheaper than per-user alternatives for businesses where many staff share a smaller number of active lines. ';if(a.integration==='teams')w+='Teams integration is supported natively, allowing calls within Microsoft Teams without additional phone licensing. ';return w;},
+    why(a){let w='<strong>3CX</strong> stands out for its pricing model — you pay per concurrent call rather than per user, which typically delivers significant savings as your team grows. ';if(parseInt(a.users,10)>=25)w+='At your team size specifically, this pricing model tends to work out more cost-effective than per-user alternatives, while still covering the same call handling, integrations, and features you need. ';if(a.deployment==='onprem')w+='As one of the few modern systems available on-premises (Windows or Linux) as well as cloud-hosted, it gives you genuine deployment choice. ';if(a.priority==='cost')w+='The concurrent-call pricing model often works out considerably cheaper than per-user alternatives for businesses where many staff share a smaller number of active lines. ';if(a.integration==='teams')w+='Teams integration is supported natively, allowing calls within Microsoft Teams without additional phone licensing. ';return w;},
     pros:['Priced per concurrent call — cheaper at scale','On-premises or cloud','Built-in video conferencing','Teams integration','Open-platform SIP compatibility'],
     cons:['IT resource helps with setup','Less managed than fully hosted','Not ideal for tech-averse teams','Annual licence model'],
     features:['On-premise','Video conferencing','Teams integration','Call recording','Call queues','CRM integration'], hl:['On-premise','Video conferencing']
@@ -303,6 +303,18 @@ function t2kScores(){
     if(s[k]<0) s[k]=0;
     s[k] = Math.round(s[k] * (T2K_PRIORITY[k] !== undefined ? T2K_PRIORITY[k] : 1));
   });
+
+  // HARD OVERRIDE: 25+ users always ranks 3CX first. Priority weighting alone
+  // only nudges scores — it can still be outscored by a system that matches
+  // several other rules strongly. This guarantees the outcome regardless of
+  // the rest of the answers, rather than just making it more likely: 3CX's
+  // score is forced to beat whatever the current top score is.
+  const rawUsers = parseInt(d.users, 10);
+  if(!isNaN(rawUsers) && rawUsers >= 25){
+    const bestOther = Math.max(0, ...Object.entries(s).filter(([k])=>k!=='3cx').map(([,v])=>v));
+    s['3cx'] = Math.max(s['3cx'], bestOther + 1);
+  }
+
   return s;
 }
 
