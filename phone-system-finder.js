@@ -315,6 +315,16 @@ function t2kScores(){
     s['3cx'] = Math.max(s['3cx'], bestOther + 1);
   }
 
+  // HARD OVERRIDE: Phoneline+ never ranks first at 5+ users. It's built for
+  // micro-businesses/sole traders — at that size the fuller-featured systems
+  // are the better fit even if it organically scores well on other answers.
+  // Uses a strict less-than (not <=) so a tie can't let it sneak into first
+  // via sort order.
+  if(!isNaN(rawUsers) && rawUsers >= 5){
+    const bestOtherPl = Math.max(0, ...Object.entries(s).filter(([k])=>k!=='phoneline').map(([,v])=>v));
+    if(s['phoneline'] >= bestOtherPl) s['phoneline'] = Math.max(0, bestOtherPl - 1);
+  }
+
   return s;
 }
 
