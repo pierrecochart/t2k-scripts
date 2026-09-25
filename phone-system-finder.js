@@ -526,6 +526,15 @@ function t2kAutoCaptureLead(sorted, derived){
   if(t2kLeadCaptured) return;
   if(!t2kAns.leadEmail) return;
   t2kLeadCaptured = true;
+
+  if (window.oaiq) {
+    oaiq(
+      "measure",
+      "lead_created",
+      { type: "customer_action" }
+    );
+  }
+
   const leadRef = t2kGetLeadRef();
   const topSys = T2K_SYS[sorted[0][0]].name;
   const ansStr = t2kActiveQS().map(q=>{
